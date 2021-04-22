@@ -8,6 +8,11 @@ const XMLError = require("./XMLError");
 class Parser extends EventEmitter {
   constructor() {
     super();
+    this.reinitParser()
+  }
+
+
+  reinitParser() {
     const parser = new LtxParser();
     this.root = null;
     this.cursor = null;
@@ -24,7 +29,7 @@ class Parser extends EventEmitter {
 
     const { root, cursor } = this;
 
-    if (!root) {
+    if (!root || element.name == root.name) {
       this.root = element;
       this.emit("start", element);
     } else if (cursor !== root) {
